@@ -24,7 +24,7 @@ Este chatbot permite a los usuarios enviar una imagen de un ticket de compra a t
 1. **Recepción de Imagen**: El usuario envía una foto del ticket de compra a WhatsApp.
 2. **Extracción de Texto (OCR)**: Se usa Tesseract OCR para convertir la imagen en texto.
 3. **Procesamiento de Datos**: Se filtra la información para identificar productos, cantidades y precios.
-4. **Almacenamiento en Base de Datos**: Se guarda la información en MongoDB o PostgreSQL.
+4. **Almacenamiento en Base de Datos**: Se guarda la información en MongoDB 
 5. **Consulta de Historial**: Se puede acceder a los datos almacenados para revisar los gastos.
 
 ## Instalación y Configuración
@@ -77,17 +77,11 @@ sudo apt install tesseract-ocr
 sudo systemctl start mongod  # Iniciar MongoDB
 ```
 
-#### Opción 2: PostgreSQL
-
-```bash
-sudo systemctl start postgresql  # Iniciar PostgreSQL
-```
 
 ### 7. Ejecutar el Backend
 
 ```bash
-python app.py  # Flask
-# O
+
 uvicorn app:app --reload  # FastAPI
 ```
 
