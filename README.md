@@ -13,11 +13,11 @@ Este chatbot permite a los usuarios enviar una imagen de un ticket de compra a t
 
 ## Tecnologías Utilizadas
 
-- **Backend:** Flask o FastAPI
+- **Backend:** FastAPI
 - **Procesamiento de Imágenes (OCR):** Tesseract OCR
-- **Base de Datos:** MongoDB o PostgreSQL
+- **Base de Datos:** MongoDB
 - **Integración con WhatsApp:** Twilio Sandbox para WhatsApp
-- **Hosting:** Local o VPS gratuito (Railway, Render, Fly.io)
+- **Hosting:** VPS gratuito Railway
 
 ## Arquitectura del Sistema
 
@@ -32,7 +32,7 @@ Este chatbot permite a los usuarios enviar una imagen de un ticket de compra a t
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tuusuario/chatbot-tickets.git
+git clone https://github.com/franjimenxz/chatbot-tickets.git
 cd chatbot-tickets
 ```
 
