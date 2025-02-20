@@ -3,11 +3,10 @@ import json
 import requests
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
 load_dotenv()
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")  # Guarda tu API Key en .env
 
-# URL oficial de la API de Claude 3
+
 CLAUDE_API_URL = ""
 
 def parse_ticket_text_with_claude(text):
@@ -36,24 +35,22 @@ def parse_ticket_text_with_claude(text):
 
     data = {
         "model": "claude-3-5-sonnet-20241022",
-        "max_tokens": 1024,  # Cambiado al formato correcto
+        "max_tokens": 1024, 
         "messages": [{"role": "user", "content": prompt}]
     }
 
     try:
         response = requests.post(CLAUDE_API_URL, headers=headers, json=data)
-        response.raise_for_status()  # Verifica si la API responde correctamente
+        response.raise_for_status()  
         result = response.json()
 
-        # Obtener el contenido generado por Claude
         generated_text = result["content"][0]["text"].strip()
-
-        # Intentar convertir el JSON generado
+      
         return json.loads(generated_text)
 
     except requests.exceptions.HTTPError as http_err:
         print(f"Error HTTP en la API de Claude: {http_err}")
-        print("Respuesta completa de la API:", response.text)  # Para depuración
+        print("Respuesta completa de la API:", response.text)  
         return None
     except Exception as e:
         print(f"Error general al procesar el ticket con Claude 3: {e}")
