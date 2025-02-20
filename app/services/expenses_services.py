@@ -8,7 +8,7 @@ load_dotenv()
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")  # Guarda tu API Key en .env
 
 # URL oficial de la API de Claude 3
-CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
+CLAUDE_API_URL = ""
 
 def parse_ticket_text_with_claude(text):
     """Usa Claude 3 Sonnet para extraer productos del ticket y devolver JSON."""
