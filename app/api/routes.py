@@ -17,7 +17,6 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
     message_body = form.get("Body", "").strip().lower()  # Obtener mensaje de usuario
     media_url = form.get("MediaUrl0")  # Imagen del ticket
 
-    # ✅ Mostrar historial agrupado por fecha
     if message_body == "historial":
         user_expenses = expenses_collection.find({"usuario": sender}).sort("fecha", -1)
         user_expenses_list = list(user_expenses)  # Convertir cursor a lista
@@ -48,13 +47,11 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
         background_tasks.add_task(send_whatsapp_message, sender, response_message)
         return {"status": "historial_sent"}
 
-    # ✅ Procesar imagen del ticket
     if not media_url:
         response_message = "Por favor, envía una foto de tu ticket 🧾 o escribe 'Historial' para ver gastos organizados por fecha."
         background_tasks.add_task(send_whatsapp_message, sender, response_message)
         return {"status": "no_image"}
 
-    # Procesar la imagen con Azure OCR
     extracted_text = extract_text_from_image(media_url)
 
     if not extracted_text:
@@ -62,7 +59,6 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
         background_tasks.add_task(send_whatsapp_message, sender, response_message)
         return {"status": "ocr_failed"}
 
-    # Usar Claude para interpretar el ticket correctamente
     print("Texto extraído por Azure OCR:\n", extracted_text)
     extracted_items = parse_ticket_text_with_claude(extracted_text)
 
@@ -71,16 +67,14 @@ async def whatsapp_webhook(request: Request, background_tasks: BackgroundTasks):
         background_tasks.add_task(send_whatsapp_message, sender, response_message)
         return {"status": "ai_parsing_failed"}
 
-    # ✅ Guardar en MongoDB con la fecha actual en formato correcto
-    fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Fecha en formato legible
+    fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     expenses_collection.insert_one({
         "usuario": sender,
         "items": extracted_items,
-        "fecha": fecha_actual  # ✅ Ahora se guarda la fecha en la BD
+        "fecha": fecha_actual  
     })
 
-    # Enviar respuesta en WhatsApp
-    response_message = f"✅ Ticket procesado el {fecha_actual}. Productos extraídos:\n"
+    response_message = f" Ticket procesado el {fecha_actual}. Productos extraídos:\n"
     for item in extracted_items:
         response_message += f"- {item['cantidad']}x {item['producto']} - ${item['precio']}\n"
 
