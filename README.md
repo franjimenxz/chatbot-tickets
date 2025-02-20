@@ -29,7 +29,7 @@ Este chatbot permite a los usuarios enviar una foto de un ticket de compra a tra
 ## Instalación y Configuración
 ### 1️⃣ Clonar el Repositorio
 ```bash
-git clone https://github.com/tuusuario/chatbot-tickets.git
+git clone https://github.com/franjimenxz/chatbot-tickets.git
 cd chatbot-tickets
 ```
 
